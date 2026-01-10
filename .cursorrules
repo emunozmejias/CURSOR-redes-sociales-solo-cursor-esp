@@ -1,0 +1,159 @@
+# Reglas de Cursor para Proyecto de Redes Sociales
+
+## Stack Tecnológico
+- **Framework**: Next.js 16.1.1 con App Router
+- **Lenguaje**: TypeScript 5
+- **React**: 19.2.3
+- **Estilos**: Tailwind CSS 4
+- **Node.js**: 20.19.6
+
+## Gestión de Versiones y Comandos de Terminal
+- **CRÍTICO**: Todos los comandos ejecutados por terminal DEBEN asegurar el uso de Node.js versión 20.19.6 usando `nvm use 20.19.6` antes de ejecutar cualquier comando npm, npx, o cualquier otro comando que requiera Node.js.
+- Si se necesita ejecutar un comando en una nueva shell, siempre incluye `nvm use 20.19.6` como parte del comando o ejecútalo primero.
+- Para comandos que requieren múltiples pasos, asegura que `nvm use 20.19.6` se ejecute antes de cualquier comando npm/npx.
+- Ejemplo correcto: `nvm use 20.19.6 && npm run dev`
+- Ejemplo correcto para comandos en nueva shell: primero `nvm use 20.19.6`, luego el comando deseado.
+
+## Principios Generales
+1. Siempre usa TypeScript con tipos estrictos. Evita `any` cuando sea posible.
+2. Prioriza componentes funcionales con hooks de React.
+3. Sigue las convenciones de Next.js App Router.
+4. Usa Tailwind CSS para todos los estilos. Evita CSS modules o archivos CSS separados a menos que sea absolutamente necesario.
+5. Mantén los componentes pequeños, reutilizables y con responsabilidades claras.
+
+## Estructura de Archivos y Organización
+- Usa el directorio `app/` para rutas y layouts del App Router.
+- Crea componentes reutilizables en `components/` en la raíz del proyecto.
+- Crea hooks personalizados en `hooks/` en la raíz del proyecto.
+- Crea utilidades en `lib/` o `utils/` en la raíz del proyecto.
+- Crea tipos TypeScript en `types/` o `@/types/` en la raíz del proyecto.
+- Usa el alias `@/` definido en `tsconfig.json` para importaciones absolutas.
+
+## Convenciones de Código
+
+### Componentes React
+- Usa nombres de componentes en PascalCase.
+- Exporta componentes como funciones por defecto para páginas y componentes principales.
+- Usa exportaciones nombradas para componentes reutilizables.
+- Extrae props a interfaces o tipos TypeScript nombrados.
+- Usa `async` en Server Components cuando necesites fetch de datos.
+
+```typescript
+// ✅ Correcto
+interface ButtonProps {
+  label: string;
+  onClick: () => void;
+  variant?: 'primary' | 'secondary';
+}
+
+export default function Button({ label, onClick, variant = 'primary' }: ButtonProps) {
+  // ...
+}
+
+// ❌ Incorrecto
+export default function Button(props: any) {
+  // ...
+}
+```
+
+### Naming Conventions
+- Variables y funciones: `camelCase`
+- Componentes: `PascalCase`
+- Constantes: `UPPER_SNAKE_CASE` o `camelCase` según el contexto
+- Archivos de componentes: `PascalCase.tsx` o `kebab-case.tsx` (mantén consistencia)
+- Archivos de utilidades: `camelCase.ts`
+
+### Manejo de Datos y Fetching
+- Usa Server Components por defecto en Next.js 16.
+- Implementa Server Actions para mutaciones de datos.
+- Usa `fetch` con caching adecuado en Server Components.
+- Para datos del cliente, usa `useEffect` y `useState` o librerías como React Query si es necesario.
+
+### Styling con Tailwind CSS
+- Usa clases de Tailwind directamente en los componentes.
+- Extrae clases repetitivas a constantes si es necesario para mantener DRY.
+- Prioriza clases utilitarias sobre CSS personalizado.
+- Usa el modo oscuro con las clases `dark:` cuando corresponda.
+- Mantén clases de Tailwind organizadas: layout, spacing, typography, colors, etc.
+
+```typescript
+// ✅ Correcto - clases organizadas
+<button className="flex items-center justify-center gap-2 rounded-full bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+  Click me
+</button>
+```
+
+### TypeScript
+- Define interfaces claras para todas las props y datos.
+- Usa tipos union cuando sea apropiado (`'primary' | 'secondary'`).
+- Evita el uso de `any`. Si es necesario, documenta por qué.
+- Usa `unknown` cuando el tipo sea realmente desconocido.
+- Tipa los valores de retorno de funciones.
+
+### Formularios y Validación
+- Valida datos en el servidor usando Server Actions.
+- Proporciona feedback visual inmediato en el cliente.
+- Usa estados de loading y error apropiados.
+- Considera usar bibliotecas como `zod` para validación de esquemas si es necesario.
+
+### Performance
+- Usa `next/image` para todas las imágenes.
+- Implementa lazy loading cuando sea apropiado.
+- Usa `React.memo` solo cuando sea necesario (después de perfilar).
+- Implementa Server Components para reducir JavaScript del cliente.
+- Optimiza renders con `useMemo` y `useCallback` solo cuando sea necesario.
+
+### Accesibilidad
+- Usa elementos semánticos HTML (`<nav>`, `<header>`, `<main>`, `<article>`, etc.).
+- Proporciona textos alternativos para imágenes.
+- Asegura contraste adecuado de colores.
+- Implementa navegación por teclado.
+- Usa atributos ARIA cuando sea necesario.
+
+### Errores y Estado de Carga
+- Implementa estados de loading explícitos.
+- Maneja errores con `error.tsx` en Next.js App Router.
+- Muestra mensajes de error amigables al usuario.
+- Registra errores apropiadamente para debugging.
+
+### Testing
+- Escribe pruebas para lógica compleja y utilidades.
+- Considera pruebas de componentes críticos.
+- Usa `__tests__` o archivos `.test.ts` / `.spec.ts`.
+
+### Git y Commits
+- Haz commits atómicos con mensajes descriptivos.
+- No commitees archivos generados o dependencias.
+
+## Específico para Redes Sociales
+- Diseña pensando en feeds, timelines, perfiles de usuario, y interacciones sociales.
+- Considera paginación o infinite scroll para feeds.
+- Implementa estados optimistas para likes, comentarios, y otras interacciones rápidas.
+- Diseña para mobile-first (las redes sociales son principalmente móviles).
+- Considera la gestión de estado global si es necesario (Context API, Zustand, etc.).
+
+## Imports
+- Usa imports absolutos con el alias `@/` para código del proyecto.
+- Mantén imports organizados: librerías externas primero, luego imports internos.
+- Agrupa imports: React/Next.js, librerías de terceros, componentes locales, tipos, utilidades.
+
+```typescript
+// ✅ Correcto
+import Image from 'next/image';
+import { useState } from 'react';
+
+import { Button } from '@/components/Button';
+import { formatDate } from '@/lib/utils';
+import type { Post } from '@/types';
+```
+
+## Comentarios y Documentación
+- Documenta funciones complejas con comentarios JSDoc.
+- Explica el "por qué" no el "qué" en comentarios.
+- Mantén comentarios actualizados con el código.
+
+## Seguridad
+- Nunca expongas información sensible en el código del cliente.
+- Valida y sanitiza datos del usuario en el servidor.
+- Usa variables de entorno para secretos y configuraciones sensibles.
+- Implementa protección CSRF donde sea necesario.
