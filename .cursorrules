@@ -9,10 +9,13 @@
 
 ## Gestión de Versiones y Comandos de Terminal
 - **CRÍTICO**: Todos los comandos ejecutados por terminal DEBEN asegurar el uso de Node.js versión 20.19.6 usando `nvm use 20.19.6` antes de ejecutar cualquier comando npm, npx, o cualquier otro comando que requiera Node.js.
+- **CRÍTICO**: Todos los comandos del frontend DEBEN ejecutarse desde la carpeta `frontend/`. Asegúrate de navegar primero con `cd frontend/` antes de ejecutar comandos npm.
 - Si se necesita ejecutar un comando en una nueva shell, siempre incluye `nvm use 20.19.6` como parte del comando o ejecútalo primero.
 - Para comandos que requieren múltiples pasos, asegura que `nvm use 20.19.6` se ejecute antes de cualquier comando npm/npx.
-- Ejemplo correcto: `nvm use 20.19.6 && npm run dev`
-- Ejemplo correcto para comandos en nueva shell: primero `nvm use 20.19.6`, luego el comando deseado.
+- Ejemplos correctos:
+  - Para frontend: `cd frontend && nvm use 20.19.6 && npm run dev`
+  - Para frontend en nueva shell: primero `cd frontend`, luego `nvm use 20.19.6`, luego `npm run dev`
+  - Para instalar dependencias del frontend: `cd frontend && nvm use 20.19.6 && npm install`
 
 ## Principios Generales
 1. Siempre usa TypeScript con tipos estrictos. Evita `any` cuando sea posible.
@@ -22,12 +25,17 @@
 5. Mantén los componentes pequeños, reutilizables y con responsabilidades claras.
 
 ## Estructura de Archivos y Organización
-- Usa el directorio `app/` para rutas y layouts del App Router.
-- Crea componentes reutilizables en `components/` en la raíz del proyecto.
-- Crea hooks personalizados en `hooks/` en la raíz del proyecto.
-- Crea utilidades en `lib/` o `utils/` en la raíz del proyecto.
-- Crea tipos TypeScript en `types/` o `@/types/` en la raíz del proyecto.
-- Usa el alias `@/` definido en `tsconfig.json` para importaciones absolutas.
+- **IMPORTANTE**: Este proyecto tiene una estructura monorepo con carpetas `frontend/` y `backend/` en la raíz.
+- El código del frontend está en `frontend/` y el backend en `backend/`.
+- Para el frontend (Next.js):
+  - Usa el directorio `frontend/app/` para rutas y layouts del App Router.
+  - Crea componentes reutilizables en `frontend/components/`.
+  - Crea hooks personalizados en `frontend/hooks/`.
+  - Crea utilidades en `frontend/lib/` o `frontend/utils/`.
+  - Crea tipos TypeScript en `frontend/types/` o `frontend/@/types/`.
+  - Usa el alias `@/` definido en `frontend/tsconfig.json` para importaciones absolutas (se resuelve a `frontend/`).
+- Para el backend:
+  - Organiza el código del backend en `backend/` según las mejores prácticas del framework elegido.
 
 ## Convenciones de Código
 
