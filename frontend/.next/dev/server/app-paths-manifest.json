@@ -1,3 +1,6 @@
 {
-  "/page": "app/page.js"
+  "/crear-publicacion/page": "app/crear-publicacion/page.js",
+  "/login/page": "app/login/page.js",
+  "/page": "app/page.js",
+  "/perfil/page": "app/perfil/page.js"
 }

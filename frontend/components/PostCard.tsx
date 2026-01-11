@@ -18,9 +18,13 @@ export default function PostCard({ post }: PostCardProps) {
   const likesCount = post.likes.length;
   const commentsCount = post.comments.length;
 
-  const handleLike = () => {
+  const handleLike = async () => {
     if (!currentUser) return;
-    toggleLike(post.id);
+    try {
+      await toggleLike(post.id);
+    } catch (error: any) {
+      alert(error.message || 'Error al dar like');
+    }
   };
 
   const handleSubmitComment = async (e: React.FormEvent) => {
@@ -28,13 +32,18 @@ export default function PostCard({ post }: PostCardProps) {
     if (!currentUser || !commentText.trim() || isSubmitting) return;
 
     setIsSubmitting(true);
-    addComment(post.id, {
-      postId: post.id,
-      userId: currentUser.id,
-      content: commentText.trim(),
-    });
-    setCommentText('');
-    setIsSubmitting(false);
+    try {
+      await addComment(post.id, {
+        postId: post.id,
+        userId: currentUser.id,
+        content: commentText.trim(),
+      });
+      setCommentText('');
+    } catch (error: any) {
+      alert(error.message || 'Error al agregar comentario');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const formatDate = (date: Date) => {

@@ -28,11 +28,15 @@ export default function PerfilPage() {
 
   const userPosts = posts.filter((post) => post.userId === currentUser.id);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (currentUser) {
-      updateUserProfile(currentUser.id, formData);
-      setIsEditing(false);
+      try {
+        await updateUserProfile(currentUser.id, formData);
+        setIsEditing(false);
+      } catch (error: any) {
+        alert(error.message || 'Error al actualizar el perfil');
+      }
     }
   };
 

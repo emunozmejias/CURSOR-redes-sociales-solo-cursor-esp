@@ -1,0 +1,25 @@
+{
+  "name": "social-app-backend",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "gateway",
+    "services/*"
+  ],
+  "scripts": {
+    "dev": "npm run clean-ports && concurrently \"npm run dev:gateway\" \"npm run dev:auth\" \"npm run dev:users\" \"npm run dev:posts\" \"npm run dev:comments\"",
+    "dev:gateway": "cd gateway && npx nodemon src/index.js",
+    "dev:auth": "cd services/auth-service && npx nodemon src/index.js",
+    "dev:users": "cd services/users-service && npx nodemon src/index.js",
+    "dev:posts": "cd services/posts-service && npx nodemon src/index.js",
+    "dev:comments": "cd services/comments-service && npx nodemon src/index.js",
+    "clean-ports": "lsof -ti:3001,3002,3003,3004,3005 | xargs kill -9 2>/dev/null || true",
+    "init-db": "node shared/database/init.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

@@ -36,7 +36,7 @@ export default function Header() {
           </Link>
         </nav>
 
-        {currentUser && (
+        {currentUser ? (
           <div className="flex items-center gap-3">
             <div className="hidden text-right sm:block">
               <p className="text-sm font-medium text-gray-900 dark:text-white">
@@ -57,6 +57,30 @@ export default function Header() {
                 {currentUser.name.charAt(0).toUpperCase()}
               </div>
             )}
+            <button
+              onClick={() => {
+                localStorage.removeItem('auth_token');
+                window.location.href = '/login';
+              }}
+              className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+            >
+              Salir
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-3">
+            <Link
+              href="/login"
+              className="text-sm font-medium text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
+            >
+              Iniciar Sesión
+            </Link>
+            <Link
+              href="/registro"
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+            >
+              Registrarse
+            </Link>
           </div>
         )}
       </div>

@@ -59,29 +59,31 @@ export default function CrearPublicacionPage() {
 
     setIsSubmitting(true);
 
-    // Simular delay de publicación
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    try {
+      await addPost({
+        userId: currentUser.id,
+        user: {
+          id: currentUser.id,
+          name: currentUser.name,
+          username: currentUser.username,
+          avatar: currentUser.avatar,
+        },
+        content: content.trim(),
+        images: images.length > 0 ? images : undefined,
+      });
 
-    addPost({
-      userId: currentUser.id,
-      user: {
-        id: currentUser.id,
-        name: currentUser.name,
-        username: currentUser.username,
-        avatar: currentUser.avatar,
-      },
-      content: content.trim(),
-      images: images.length > 0 ? images : undefined,
-    });
+      // Limpiar formulario
+      setContent('');
+      setImages([]);
+      setImageUrls([]);
 
-    // Limpiar formulario
-    setContent('');
-    setImages([]);
-    setImageUrls([]);
-    setIsSubmitting(false);
-
-    // Redirigir al feed
-    router.push('/');
+      // Redirigir al feed
+      router.push('/');
+    } catch (error: any) {
+      alert(error.message || 'Error al crear la publicación');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
