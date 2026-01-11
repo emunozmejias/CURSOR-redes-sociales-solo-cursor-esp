@@ -116,6 +116,10 @@ const postsApi = {
     async getFeed (page = 1, limit = 10) {
         return apiRequest(`/api/posts?page=${page}&limit=${limit}`);
     },
+    // Obtener posts de un usuario específico
+    async getByUser (userId, page = 1, limit = 50) {
+        return apiRequest(`/api/posts/user/${userId}?page=${page}&limit=${limit}`);
+    },
     // Crear publicación
     async create (data) {
         const response = await apiRequest('/api/posts', {
@@ -127,6 +131,14 @@ const postsApi = {
     // Obtener publicación por ID
     async getById (postId) {
         const response = await apiRequest(`/api/posts/${postId}`);
+        return response.post;
+    },
+    // Actualizar publicación
+    async update (postId, data) {
+        const response = await apiRequest(`/api/posts/${postId}`, {
+            method: 'PUT',
+            body: JSON.stringify(data)
+        });
         return response.post;
     },
     // Eliminar publicación
@@ -156,6 +168,16 @@ const commentsApi = {
         return apiRequest(`/api/comments/post/${postId}/like`, {
             method: 'POST'
         });
+    },
+    // Obtener likes de un post
+    async getLikesByPost (postId) {
+        const response = await apiRequest(`/api/comments/post/${postId}/likes`);
+        return (response.likes || []).map((like)=>({
+                id: String(like.id),
+                postId: String(like.post_id || like.postId),
+                userId: String(like.user_id || like.userId),
+                createdAt: new Date(like.created_at || like.createdAt)
+            }));
     }
 };
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
@@ -185,6 +207,7 @@ function SocialProvider({ children }) {
     const [currentUser, setCurrentUser] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [users, setUsers] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [posts, setPosts] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [userPosts, setUserPosts] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     // Cargar usuario desde el token al iniciar
@@ -193,72 +216,100 @@ function SocialProvider({ children }) {
             try {
                 const token = ("TURBOPACK compile-time truthy", 1) ? localStorage.getItem('auth_token') : "TURBOPACK unreachable";
                 if (!token) {
+                    console.log('[SocialContext] No hay token, no se carga usuario');
                     setIsLoading(false);
                     return;
                 }
+                console.log('[SocialContext] Verificando token...');
                 const response = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["authApi"].verify();
+                console.log('[SocialContext] Respuesta de verify:', response);
                 if (response.valid && response.user) {
+                    console.log('[SocialContext] Usuario cargado desde verify:', response.user);
                     setCurrentUser({
-                        ...response.user,
-                        createdAt: new Date(response.user.createdAt)
+                        id: String(response.user.id),
+                        email: response.user.email,
+                        username: response.user.username,
+                        name: response.user.name,
+                        bio: response.user.bio || '',
+                        avatar: response.user.avatar,
+                        coverImage: response.user.coverImage,
+                        createdAt: new Date(response.user.createdAt || response.user.created_at)
                     });
                 } else {
+                    console.log('[SocialContext] Token inválido o sin usuario, removiendo token');
                     localStorage.removeItem('auth_token');
+                    setCurrentUser(null);
                 }
             } catch (err) {
-                console.error('Error loading user:', err);
+                console.error('[SocialContext] Error loading user:', err);
                 localStorage.removeItem('auth_token');
+                setCurrentUser(null);
             } finally{
                 setIsLoading(false);
             }
         }
     }["SocialProvider.useCallback[loadUser]"], []);
+    // Helper para mapear posts del backend
+    const mapPost = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "SocialProvider.useCallback[mapPost]": async (post)=>{
+            const createdAt = post.created_at || post.createdAt;
+            // Cargar comentarios y likes para cada post
+            let comments = [];
+            let likes = [];
+            try {
+                [comments, likes] = await Promise.all([
+                    __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["commentsApi"].getByPost(post.id),
+                    __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["commentsApi"].getLikesByPost(post.id)
+                ]);
+            } catch (err) {
+                console.error(`Error loading comments/likes for post ${post.id}:`, err);
+                // Si falla, intentar cargar por separado
+                try {
+                    comments = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["commentsApi"].getByPost(post.id);
+                } catch (err2) {
+                    console.error(`Error loading comments for post ${post.id}:`, err2);
+                }
+                try {
+                    likes = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["commentsApi"].getLikesByPost(post.id);
+                } catch (err3) {
+                    console.error(`Error loading likes for post ${post.id}:`, err3);
+                }
+            }
+            return {
+                id: String(post.id),
+                userId: String(post.user_id || post.userId),
+                user: post.user || {
+                    id: String(post.user_id || post.userId),
+                    name: post.user?.name || '',
+                    username: post.user?.username || '',
+                    avatar: post.user?.avatar
+                },
+                content: post.content,
+                images: Array.isArray(post.images) ? post.images : [],
+                likes: likes,
+                comments: comments.map({
+                    "SocialProvider.useCallback[mapPost]": (c)=>({
+                            ...c,
+                            id: String(c.id),
+                            postId: String(c.post_id || c.postId),
+                            userId: String(c.user_id || c.userId),
+                            createdAt: new Date(c.created_at || c.createdAt),
+                            user: c.user || {}
+                        })
+                }["SocialProvider.useCallback[mapPost]"]),
+                createdAt: new Date(createdAt)
+            };
+        }
+    }["SocialProvider.useCallback[mapPost]"], []);
     // Cargar posts desde la API
     const loadPosts = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "SocialProvider.useCallback[loadPosts]": async ()=>{
             try {
                 setError(null);
                 const response = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["postsApi"].getFeed(1, 50);
-                // Mapear los posts a nuestro formato y cargar comentarios/likes
+                // Mapear los posts a nuestro formato
                 const mappedPosts = await Promise.all(response.posts.map({
-                    "SocialProvider.useCallback[loadPosts]": async (post)=>{
-                        // Convertir fecha (el backend puede enviar created_at o createdAt)
-                        const createdAt = post.created_at || post.createdAt;
-                        // Cargar comentarios y likes para cada post
-                        let comments = [];
-                        let likes = [];
-                        try {
-                            comments = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["commentsApi"].getByPost(post.id);
-                        // Los likes se manejan con el conteo, pero no hay endpoint para obtenerlos individualmente
-                        // así que usamos un array vacío y el conteo viene en post.likesCount
-                        } catch (err) {
-                            console.error(`Error loading comments for post ${post.id}:`, err);
-                        }
-                        return {
-                            id: String(post.id),
-                            userId: String(post.user_id || post.userId),
-                            user: post.user || {
-                                id: String(post.user_id || post.userId),
-                                name: post.user?.name || '',
-                                username: post.user?.username || '',
-                                avatar: post.user?.avatar
-                            },
-                            content: post.content,
-                            images: Array.isArray(post.images) ? post.images : [],
-                            likes: likes,
-                            comments: comments.map({
-                                "SocialProvider.useCallback[loadPosts]": (c)=>({
-                                        ...c,
-                                        id: String(c.id),
-                                        postId: String(c.post_id || c.postId),
-                                        userId: String(c.user_id || c.userId),
-                                        createdAt: new Date(c.created_at || c.createdAt),
-                                        user: c.user || {}
-                                    })
-                            }["SocialProvider.useCallback[loadPosts]"]),
-                            createdAt: new Date(createdAt)
-                        };
-                    }
+                    "SocialProvider.useCallback[loadPosts]": (post)=>mapPost(post)
                 }["SocialProvider.useCallback[loadPosts]"]));
                 setPosts(mappedPosts);
             } catch (err) {
@@ -266,7 +317,28 @@ function SocialProvider({ children }) {
                 setError(err.message || 'Error al cargar las publicaciones');
             }
         }
-    }["SocialProvider.useCallback[loadPosts]"], []);
+    }["SocialProvider.useCallback[loadPosts]"], [
+        mapPost
+    ]);
+    // Cargar posts de un usuario específico
+    const loadUserPosts = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "SocialProvider.useCallback[loadUserPosts]": async (userId)=>{
+            try {
+                setError(null);
+                const response = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["postsApi"].getByUser(userId, 1, 50);
+                // Mapear los posts a nuestro formato
+                const mappedPosts = await Promise.all(response.posts.map({
+                    "SocialProvider.useCallback[loadUserPosts]": (post)=>mapPost(post)
+                }["SocialProvider.useCallback[loadUserPosts]"]));
+                setUserPosts(mappedPosts);
+            } catch (err) {
+                console.error('Error loading user posts:', err);
+                setError(err.message || 'Error al cargar las publicaciones del usuario');
+            }
+        }
+    }["SocialProvider.useCallback[loadUserPosts]"], [
+        mapPost
+    ]);
     // Cargar datos al montar el componente
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "SocialProvider.useEffect": ()=>{
@@ -315,22 +387,48 @@ function SocialProvider({ children }) {
         currentUser
     ]);
     const updatePost = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
-        "SocialProvider.useCallback[updatePost]": (postId, updates)=>{
-            setPosts({
-                "SocialProvider.useCallback[updatePost]": (prev)=>prev.map({
-                        "SocialProvider.useCallback[updatePost]": (post)=>post.id === postId ? {
-                                ...post,
-                                ...updates
-                            } : post
-                    }["SocialProvider.useCallback[updatePost]"])
-            }["SocialProvider.useCallback[updatePost]"]);
+        "SocialProvider.useCallback[updatePost]": async (postId, updates)=>{
+            try {
+                const response = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["postsApi"].update(postId, updates);
+                // El backend devuelve el post actualizado, pero necesitamos recargar con likes y comentarios
+                // Por ahora, actualizamos solo el contenido
+                const updatePostInArray = {
+                    "SocialProvider.useCallback[updatePost].updatePostInArray": (posts)=>posts.map({
+                            "SocialProvider.useCallback[updatePost].updatePostInArray": (post)=>{
+                                if (post.id !== postId) return post;
+                                return {
+                                    ...post,
+                                    content: response.content || post.content,
+                                    images: Array.isArray(response.images) ? response.images : post.images
+                                };
+                            }
+                        }["SocialProvider.useCallback[updatePost].updatePostInArray"])
+                }["SocialProvider.useCallback[updatePost].updatePostInArray"];
+                // Actualizar posts del feed
+                setPosts({
+                    "SocialProvider.useCallback[updatePost]": (prev)=>updatePostInArray(prev)
+                }["SocialProvider.useCallback[updatePost]"]);
+                // Actualizar posts del usuario
+                setUserPosts({
+                    "SocialProvider.useCallback[updatePost]": (prev)=>updatePostInArray(prev)
+                }["SocialProvider.useCallback[updatePost]"]);
+            } catch (err) {
+                console.error('Error updating post:', err);
+                throw err;
+            }
         }
     }["SocialProvider.useCallback[updatePost]"], []);
     const deletePost = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "SocialProvider.useCallback[deletePost]": async (postId)=>{
             try {
                 await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["postsApi"].delete(postId);
+                // Eliminar de ambos arrays
                 setPosts({
+                    "SocialProvider.useCallback[deletePost]": (prev)=>prev.filter({
+                            "SocialProvider.useCallback[deletePost]": (post)=>post.id !== postId
+                        }["SocialProvider.useCallback[deletePost]"])
+                }["SocialProvider.useCallback[deletePost]"]);
+                setUserPosts({
                     "SocialProvider.useCallback[deletePost]": (prev)=>prev.filter({
                             "SocialProvider.useCallback[deletePost]": (post)=>post.id !== postId
                         }["SocialProvider.useCallback[deletePost]"])
@@ -374,40 +472,27 @@ function SocialProvider({ children }) {
             if (!currentUser) throw new Error('Usuario no autenticado');
             try {
                 const response = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["commentsApi"].toggleLike(postId);
-                // Actualizar el estado local optimísticamente
-                setPosts({
-                    "SocialProvider.useCallback[toggleLike]": (prev)=>prev.map({
-                            "SocialProvider.useCallback[toggleLike]": (post)=>{
+                // Recargar los likes desde el servidor para asegurar consistencia
+                const updatedLikes = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["commentsApi"].getLikesByPost(postId);
+                // Función helper para actualizar likes en un array de posts
+                const updateLikesInPosts = {
+                    "SocialProvider.useCallback[toggleLike].updateLikesInPosts": (posts)=>posts.map({
+                            "SocialProvider.useCallback[toggleLike].updateLikesInPosts": (post)=>{
                                 if (post.id !== postId) return post;
-                                const existingLike = post.likes.find({
-                                    "SocialProvider.useCallback[toggleLike].existingLike": (like)=>like.userId === currentUser.id
-                                }["SocialProvider.useCallback[toggleLike].existingLike"]);
-                                if (existingLike) {
-                                    // Quitar like
-                                    return {
-                                        ...post,
-                                        likes: post.likes.filter({
-                                            "SocialProvider.useCallback[toggleLike]": (like)=>like.id !== existingLike.id
-                                        }["SocialProvider.useCallback[toggleLike]"])
-                                    };
-                                } else {
-                                    // Agregar like
-                                    const newLike = {
-                                        id: Date.now().toString(),
-                                        postId,
-                                        userId: currentUser.id,
-                                        createdAt: new Date()
-                                    };
-                                    return {
-                                        ...post,
-                                        likes: [
-                                            ...post.likes,
-                                            newLike
-                                        ]
-                                    };
-                                }
+                                return {
+                                    ...post,
+                                    likes: updatedLikes
+                                };
                             }
-                        }["SocialProvider.useCallback[toggleLike]"])
+                        }["SocialProvider.useCallback[toggleLike].updateLikesInPosts"])
+                }["SocialProvider.useCallback[toggleLike].updateLikesInPosts"];
+                // Actualizar posts del feed
+                setPosts({
+                    "SocialProvider.useCallback[toggleLike]": (prev)=>updateLikesInPosts(prev)
+                }["SocialProvider.useCallback[toggleLike]"]);
+                // Actualizar posts del usuario si está en la página de perfil
+                setUserPosts({
+                    "SocialProvider.useCallback[toggleLike]": (prev)=>updateLikesInPosts(prev)
                 }["SocialProvider.useCallback[toggleLike]"]);
             } catch (err) {
                 console.error('Error toggling like:', err);
@@ -468,11 +553,13 @@ function SocialProvider({ children }) {
             currentUser,
             users,
             posts,
+            userPosts,
             isLoading,
             error,
             setCurrentUser,
             loadUser,
             loadPosts,
+            loadUserPosts,
             addPost,
             updatePost,
             deletePost,
@@ -484,11 +571,11 @@ function SocialProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/context/SocialContext.tsx",
-        lineNumber: 275,
+        lineNumber: 339,
         columnNumber: 5
     }, this);
 }
-_s(SocialProvider, "AeZRoOHVoLM6dKMPPfdkwG+GndE=");
+_s(SocialProvider, "DxH7jVmRX1JMtKs48FVkd/DyZ8U=");
 _c = SocialProvider;
 function useSocial() {
     _s1();
@@ -588,7 +675,7 @@ function Header() {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-sm font-medium text-gray-900 dark:text-white",
-                                    children: currentUser.name
+                                    children: currentUser.name || 'Usuario'
                                 }, void 0, false, {
                                     fileName: "[project]/components/Header.tsx",
                                     lineNumber: 42,
@@ -598,7 +685,7 @@ function Header() {
                                     className: "text-xs text-gray-500 dark:text-gray-400",
                                     children: [
                                         "@",
-                                        currentUser.username
+                                        currentUser.username || 'usuario'
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/Header.tsx",
@@ -613,7 +700,7 @@ function Header() {
                         }, this),
                         currentUser.avatar ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                             src: currentUser.avatar,
-                            alt: currentUser.name,
+                            alt: currentUser.name || 'Usuario',
                             className: "h-10 w-10 rounded-full border-2 border-gray-200 dark:border-gray-700"
                         }, void 0, false, {
                             fileName: "[project]/components/Header.tsx",
@@ -621,7 +708,7 @@ function Header() {
                             columnNumber: 15
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 text-white font-semibold",
-                            children: currentUser.name.charAt(0).toUpperCase()
+                            children: currentUser.name && currentUser.name.length > 0 ? currentUser.name.charAt(0).toUpperCase() : currentUser.username && currentUser.username.length > 0 ? currentUser.username.charAt(0).toUpperCase() : 'U'
                         }, void 0, false, {
                             fileName: "[project]/components/Header.tsx",
                             lineNumber: 56,
@@ -636,7 +723,7 @@ function Header() {
                             children: "Salir"
                         }, void 0, false, {
                             fileName: "[project]/components/Header.tsx",
-                            lineNumber: 60,
+                            lineNumber: 64,
                             columnNumber: 13
                         }, this)
                     ]
@@ -653,7 +740,7 @@ function Header() {
                             children: "Iniciar Sesión"
                         }, void 0, false, {
                             fileName: "[project]/components/Header.tsx",
-                            lineNumber: 72,
+                            lineNumber: 76,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -662,13 +749,13 @@ function Header() {
                             children: "Registrarse"
                         }, void 0, false, {
                             fileName: "[project]/components/Header.tsx",
-                            lineNumber: 78,
+                            lineNumber: 82,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/Header.tsx",
-                    lineNumber: 71,
+                    lineNumber: 75,
                     columnNumber: 11
                 }, this)
             ]

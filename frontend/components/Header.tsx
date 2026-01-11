@@ -40,21 +40,25 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <div className="hidden text-right sm:block">
               <p className="text-sm font-medium text-gray-900 dark:text-white">
-                {currentUser.name}
+                {currentUser.name || 'Usuario'}
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                @{currentUser.username}
+                @{currentUser.username || 'usuario'}
               </p>
             </div>
             {currentUser.avatar ? (
               <img
                 src={currentUser.avatar}
-                alt={currentUser.name}
+                alt={currentUser.name || 'Usuario'}
                 className="h-10 w-10 rounded-full border-2 border-gray-200 dark:border-gray-700"
               />
             ) : (
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 text-white font-semibold">
-                {currentUser.name.charAt(0).toUpperCase()}
+                {(currentUser.name && currentUser.name.length > 0)
+                  ? currentUser.name.charAt(0).toUpperCase()
+                  : currentUser.username && currentUser.username.length > 0
+                  ? currentUser.username.charAt(0).toUpperCase()
+                  : 'U'}
               </div>
             )}
             <button

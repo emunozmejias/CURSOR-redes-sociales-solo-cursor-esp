@@ -1,18 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSocial } from '@/context/SocialContext';
-import PostCard from '@/components/PostCard';
+import PostCardEditable from '@/components/PostCardEditable';
+import EditPostModal from '@/components/EditPostModal';
+import type { Post } from '@/types';
 
 export default function PerfilPage() {
-  const { currentUser, posts, updateUserProfile } = useSocial();
+  const { currentUser, userPosts, updateUserProfile, updatePost, loadUserPosts, isLoading } = useSocial();
   const [isEditing, setIsEditing] = useState(false);
+  const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [formData, setFormData] = useState({
     name: currentUser?.name || '',
     username: currentUser?.username || '',
     bio: currentUser?.bio || '',
     email: currentUser?.email || '',
   });
+
+  // Cargar posts del usuario cuando cambia el usuario actual
+  useEffect(() => {
+    if (currentUser?.id) {
+      loadUserPosts(currentUser.id);
+    }
+  }, [currentUser?.id, loadUserPosts]);
+
+  // Actualizar formData cuando cambia currentUser
+  useEffect(() => {
+    if (currentUser) {
+      setFormData({
+        name: currentUser.name || '',
+        username: currentUser.username || '',
+        bio: currentUser.bio || '',
+        email: currentUser.email || '',
+      });
+    }
+  }, [currentUser]);
 
   if (!currentUser) {
     return (
@@ -25,8 +47,6 @@ export default function PerfilPage() {
       </main>
     );
   }
-
-  const userPosts = posts.filter((post) => post.userId === currentUser.id);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,6 +70,25 @@ export default function PerfilPage() {
     setIsEditing(false);
   };
 
+  const handleEditPost = (post: Post) => {
+    setEditingPost(post);
+  };
+
+  const handleSavePost = async (content: string, images?: string[]) => {
+    if (!editingPost) return;
+    try {
+      await updatePost(editingPost.id, { content, images });
+      setEditingPost(null);
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
+  const handleDeletePost = () => {
+    // El PostCardEditable ya maneja la eliminación
+    // Esta función puede usarse para acciones adicionales después de eliminar
+  };
+
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <div className="mx-auto max-w-2xl px-4 py-6 pb-24 sm:px-6 md:pb-6">
@@ -69,7 +108,11 @@ export default function PerfilPage() {
                 />
               ) : (
                 <div className="flex h-24 w-24 items-center justify-center rounded-full border-4 border-white bg-blue-500 text-3xl font-bold text-white dark:border-black">
-                  {currentUser.name.charAt(0).toUpperCase()}
+                  {(currentUser.name && currentUser.name.length > 0)
+                    ? currentUser.name.charAt(0).toUpperCase()
+                    : currentUser.username && currentUser.username.length > 0
+                    ? currentUser.username.charAt(0).toUpperCase()
+                    : 'U'}
                 </div>
               )}
             </div>
@@ -172,7 +215,13 @@ export default function PerfilPage() {
           <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
             Mis publicaciones ({userPosts.length})
           </h2>
-          {userPosts.length === 0 ? (
+          {isLoading ? (
+            <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-black">
+              <p className="text-gray-600 dark:text-gray-400">
+                Cargando publicaciones...
+              </p>
+            </div>
+          ) : userPosts.length === 0 ? (
             <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-black">
               <p className="text-gray-600 dark:text-gray-400">
                 Aún no has publicado nada. ¡Crea tu primera publicación!
@@ -181,12 +230,27 @@ export default function PerfilPage() {
           ) : (
             <div className="space-y-4">
               {userPosts.map((post) => (
-                <PostCard key={post.id} post={post} />
+                <PostCardEditable
+                  key={post.id}
+                  post={post}
+                  onEdit={() => handleEditPost(post)}
+                  onDelete={handleDeletePost}
+                />
               ))}
             </div>
           )}
         </div>
       </div>
+
+      {/* Modal para editar publicación */}
+      {editingPost && (
+        <EditPostModal
+          post={editingPost}
+          isOpen={!!editingPost}
+          onClose={() => setEditingPost(null)}
+          onSave={handleSavePost}
+        />
+      )}
     </main>
   );
 }

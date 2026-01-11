@@ -139,7 +139,38 @@ const login = async (req, res) => {
 };
 
 const verify = async (req, res) => {
-  res.json({ valid: true, user: req.user });
+  try {
+    const userId = req.user.userId;
+    
+    // Obtener información completa del usuario desde la base de datos
+    const result = await pool.query(
+      'SELECT id, email, username, name, bio, avatar, cover_image, created_at FROM users WHERE id = $1',
+      [userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ valid: false, error: 'Usuario no encontrado' });
+    }
+
+    const user = result.rows[0];
+    
+    res.json({
+      valid: true,
+      user: {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        name: user.name,
+        bio: user.bio || '',
+        avatar: user.avatar,
+        coverImage: user.cover_image,
+        createdAt: user.created_at
+      }
+    });
+  } catch (error) {
+    console.error('Error en verify:', error);
+    res.status(500).json({ valid: false, error: 'Error interno del servidor' });
+  }
 };
 
 const refresh = async (req, res) => {

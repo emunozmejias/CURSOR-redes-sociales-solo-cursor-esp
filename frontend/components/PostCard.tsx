@@ -67,23 +67,27 @@ export default function PostCard({ post }: PostCardProps) {
     <article className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-black">
       {/* Header del post */}
       <div className="mb-3 flex items-center gap-3">
-        {post.user.avatar ? (
+        {post.user?.avatar ? (
           <img
             src={post.user.avatar}
-            alt={post.user.name}
+            alt={post.user?.name || 'Usuario'}
             className="h-10 w-10 rounded-full"
           />
         ) : (
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 text-white font-semibold">
-            {post.user.name.charAt(0).toUpperCase()}
+            {(post.user?.name && post.user.name.length > 0)
+              ? post.user.name.charAt(0).toUpperCase()
+              : post.user?.username && post.user.username.length > 0
+              ? post.user.username.charAt(0).toUpperCase()
+              : 'U'}
           </div>
         )}
         <div className="flex-1">
           <p className="font-semibold text-gray-900 dark:text-white">
-            {post.user.name}
+            {post.user?.name || 'Usuario'}
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            @{post.user.username} · {formatDate(post.createdAt)}
+            @{post.user?.username || 'usuario'} · {formatDate(post.createdAt)}
           </p>
         </div>
       </div>
@@ -145,20 +149,24 @@ export default function PostCard({ post }: PostCardProps) {
             ) : (
               post.comments.map((comment) => (
                 <div key={comment.id} className="flex gap-2">
-                  {comment.user.avatar ? (
+                  {comment.user?.avatar ? (
                     <img
                       src={comment.user.avatar}
-                      alt={comment.user.name}
+                      alt={comment.user?.name || 'Usuario'}
                       className="h-8 w-8 rounded-full"
                     />
                   ) : (
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-white text-xs font-semibold">
-                      {comment.user.name.charAt(0).toUpperCase()}
+                      {(comment.user?.name && comment.user.name.length > 0)
+                        ? comment.user.name.charAt(0).toUpperCase()
+                        : comment.user?.username && comment.user.username.length > 0
+                        ? comment.user.username.charAt(0).toUpperCase()
+                        : 'U'}
                     </div>
                   )}
                   <div className="flex-1 rounded-lg bg-gray-50 p-2 dark:bg-gray-900">
                     <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                      {comment.user.name}
+                      {comment.user?.name || 'Usuario'}
                     </p>
                     <p className="text-sm text-gray-700 dark:text-gray-300">
                       {comment.content}

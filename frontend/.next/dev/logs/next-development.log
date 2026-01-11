@@ -1,7 +1,5 @@
-[00:00:00.812] Server  LOG     ✓ Ready in 599ms
-[00:00:33.169] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:06:43.073] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:06:52.996] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:08:23.160] Server  LOG     ✓ Compiled in 15ms
-[00:08:24.712] Server  LOG     ✓ Compiled in 12ms
-[00:09:01.426] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:00.730] Server  LOG     ✓ Ready in 527ms
+[00:00:01.168] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:01.295] Browser LOG     [SocialContext] Verificando token...
+[00:00:02.314] Browser LOG     [SocialContext] Respuesta de verify: {"user":{"avatar":null,"bio":"Esta es mi biografía de prueba","coverImage":null,"createdAt":"2026-01-11T05:04:41.313Z","email":"test@example.com","id":2,"name":"Usuario de Prueba","username":"testuser"},"valid":true}
+[00:00:02.314] Browser LOG     [SocialContext] Usuario cargado desde verify: {"avatar":null,"bio":"Esta es mi biografía de prueba","coverImage":null,"createdAt":"2026-01-11T05:04:41.313Z","email":"test@example.com","id":2,"name":"Usuario de Prueba","username":"testuser"}

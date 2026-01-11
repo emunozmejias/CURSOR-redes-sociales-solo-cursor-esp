@@ -67,9 +67,9 @@ function PostCard({ post }) {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "mb-3 flex items-center gap-3",
                 children: [
-                    post.user.avatar ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                    post.user?.avatar ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                         src: post.user.avatar,
-                        alt: post.user.name,
+                        alt: post.user?.name || 'Usuario',
                         className: "h-10 w-10 rounded-full"
                     }, void 0, false, {
                         fileName: "[project]/components/PostCard.tsx",
@@ -77,7 +77,7 @@ function PostCard({ post }) {
                         columnNumber: 11
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 text-white font-semibold",
-                        children: post.user.name.charAt(0).toUpperCase()
+                        children: post.user?.name && post.user.name.length > 0 ? post.user.name.charAt(0).toUpperCase() : post.user?.username && post.user.username.length > 0 ? post.user.username.charAt(0).toUpperCase() : 'U'
                     }, void 0, false, {
                         fileName: "[project]/components/PostCard.tsx",
                         lineNumber: 77,
@@ -88,29 +88,29 @@ function PostCard({ post }) {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 className: "font-semibold text-gray-900 dark:text-white",
-                                children: post.user.name
+                                children: post.user?.name || 'Usuario'
                             }, void 0, false, {
                                 fileName: "[project]/components/PostCard.tsx",
-                                lineNumber: 82,
+                                lineNumber: 86,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 className: "text-sm text-gray-500 dark:text-gray-400",
                                 children: [
                                     "@",
-                                    post.user.username,
+                                    post.user?.username || 'usuario',
                                     " · ",
                                     formatDate(post.createdAt)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/PostCard.tsx",
-                                lineNumber: 85,
+                                lineNumber: 89,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/PostCard.tsx",
-                        lineNumber: 81,
+                        lineNumber: 85,
                         columnNumber: 9
                     }, this)
                 ]
@@ -126,12 +126,12 @@ function PostCard({ post }) {
                     children: post.content
                 }, void 0, false, {
                     fileName: "[project]/components/PostCard.tsx",
-                    lineNumber: 93,
+                    lineNumber: 97,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/PostCard.tsx",
-                lineNumber: 92,
+                lineNumber: 96,
                 columnNumber: 7
             }, this),
             post.images && post.images.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -147,17 +147,17 @@ function PostCard({ post }) {
                             className: "h-full w-full object-cover"
                         }, void 0, false, {
                             fileName: "[project]/components/PostCard.tsx",
-                            lineNumber: 103,
+                            lineNumber: 107,
                             columnNumber: 15
                         }, this)
                     }, index, false, {
                         fileName: "[project]/components/PostCard.tsx",
-                        lineNumber: 102,
+                        lineNumber: 106,
                         columnNumber: 13
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/components/PostCard.tsx",
-                lineNumber: 100,
+                lineNumber: 104,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -172,7 +172,7 @@ function PostCard({ post }) {
                                 children: isLiked ? '❤️' : '🤍'
                             }, void 0, false, {
                                 fileName: "[project]/components/PostCard.tsx",
-                                lineNumber: 123,
+                                lineNumber: 127,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -180,13 +180,13 @@ function PostCard({ post }) {
                                 children: likesCount
                             }, void 0, false, {
                                 fileName: "[project]/components/PostCard.tsx",
-                                lineNumber: 124,
+                                lineNumber: 128,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/PostCard.tsx",
-                        lineNumber: 115,
+                        lineNumber: 119,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -198,7 +198,7 @@ function PostCard({ post }) {
                                 children: "💬"
                             }, void 0, false, {
                                 fileName: "[project]/components/PostCard.tsx",
-                                lineNumber: 131,
+                                lineNumber: 135,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -206,19 +206,19 @@ function PostCard({ post }) {
                                 children: commentsCount
                             }, void 0, false, {
                                 fileName: "[project]/components/PostCard.tsx",
-                                lineNumber: 132,
+                                lineNumber: 136,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/PostCard.tsx",
-                        lineNumber: 127,
+                        lineNumber: 131,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/PostCard.tsx",
-                lineNumber: 114,
+                lineNumber: 118,
                 columnNumber: 7
             }, this),
             showComments && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -231,25 +231,25 @@ function PostCard({ post }) {
                             children: "No hay comentarios todavía. Sé el primero en comentar."
                         }, void 0, false, {
                             fileName: "[project]/components/PostCard.tsx",
-                            lineNumber: 142,
+                            lineNumber: 146,
                             columnNumber: 15
                         }, this) : post.comments.map((comment)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "flex gap-2",
                                 children: [
-                                    comment.user.avatar ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                    comment.user?.avatar ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                         src: comment.user.avatar,
-                                        alt: comment.user.name,
+                                        alt: comment.user?.name || 'Usuario',
                                         className: "h-8 w-8 rounded-full"
                                     }, void 0, false, {
                                         fileName: "[project]/components/PostCard.tsx",
-                                        lineNumber: 149,
+                                        lineNumber: 153,
                                         columnNumber: 21
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-white text-xs font-semibold",
-                                        children: comment.user.name.charAt(0).toUpperCase()
+                                        children: comment.user?.name && comment.user.name.length > 0 ? comment.user.name.charAt(0).toUpperCase() : comment.user?.username && comment.user.username.length > 0 ? comment.user.username.charAt(0).toUpperCase() : 'U'
                                     }, void 0, false, {
                                         fileName: "[project]/components/PostCard.tsx",
-                                        lineNumber: 155,
+                                        lineNumber: 159,
                                         columnNumber: 21
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -257,10 +257,10 @@ function PostCard({ post }) {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                 className: "text-sm font-semibold text-gray-900 dark:text-white",
-                                                children: comment.user.name
+                                                children: comment.user?.name || 'Usuario'
                                             }, void 0, false, {
                                                 fileName: "[project]/components/PostCard.tsx",
-                                                lineNumber: 160,
+                                                lineNumber: 168,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -268,7 +268,7 @@ function PostCard({ post }) {
                                                 children: comment.content
                                             }, void 0, false, {
                                                 fileName: "[project]/components/PostCard.tsx",
-                                                lineNumber: 163,
+                                                lineNumber: 171,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -276,24 +276,24 @@ function PostCard({ post }) {
                                                 children: formatDate(comment.createdAt)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/PostCard.tsx",
-                                                lineNumber: 166,
+                                                lineNumber: 174,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/PostCard.tsx",
-                                        lineNumber: 159,
+                                        lineNumber: 167,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, comment.id, true, {
                                 fileName: "[project]/components/PostCard.tsx",
-                                lineNumber: 147,
+                                lineNumber: 151,
                                 columnNumber: 17
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/components/PostCard.tsx",
-                        lineNumber: 140,
+                        lineNumber: 144,
                         columnNumber: 11
                     }, this),
                     currentUser && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -309,7 +309,7 @@ function PostCard({ post }) {
                                 disabled: isSubmitting
                             }, void 0, false, {
                                 fileName: "[project]/components/PostCard.tsx",
-                                lineNumber: 178,
+                                lineNumber: 186,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -319,19 +319,19 @@ function PostCard({ post }) {
                                 children: isSubmitting ? '...' : 'Enviar'
                             }, void 0, false, {
                                 fileName: "[project]/components/PostCard.tsx",
-                                lineNumber: 186,
+                                lineNumber: 194,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/PostCard.tsx",
-                        lineNumber: 177,
+                        lineNumber: 185,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/PostCard.tsx",
-                lineNumber: 138,
+                lineNumber: 142,
                 columnNumber: 9
             }, this)
         ]
@@ -359,7 +359,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$PostCard$2e$ts
 ;
 ;
 function PerfilPage() {
-    const { currentUser, posts, updateUserProfile } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$SocialContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSocial"])();
+    const { currentUser, userPosts, updateUserProfile, loadUserPosts, isLoading } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$SocialContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSocial"])();
     const [isEditing, setIsEditing] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
         name: currentUser?.name || '',
@@ -367,6 +367,28 @@ function PerfilPage() {
         bio: currentUser?.bio || '',
         email: currentUser?.email || ''
     });
+    // Cargar posts del usuario cuando cambia el usuario actual
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (currentUser?.id) {
+            loadUserPosts(currentUser.id);
+        }
+    }, [
+        currentUser?.id,
+        loadUserPosts
+    ]);
+    // Actualizar formData cuando cambia currentUser
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (currentUser) {
+            setFormData({
+                name: currentUser.name || '',
+                username: currentUser.username || '',
+                bio: currentUser.bio || '',
+                email: currentUser.email || ''
+            });
+        }
+    }, [
+        currentUser
+    ]);
     if (!currentUser) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
             className: "min-h-screen bg-gray-50 dark:bg-gray-950",
@@ -377,21 +399,20 @@ function PerfilPage() {
                     children: "Por favor inicia sesión para ver tu perfil."
                 }, void 0, false, {
                     fileName: "[project]/app/perfil/page.tsx",
-                    lineNumber: 21,
+                    lineNumber: 40,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/perfil/page.tsx",
-                lineNumber: 20,
+                lineNumber: 39,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/perfil/page.tsx",
-            lineNumber: 19,
+            lineNumber: 38,
             columnNumber: 7
         }, this);
     }
-    const userPosts = posts.filter((post)=>post.userId === currentUser.id);
     const handleSubmit = async (e)=>{
         e.preventDefault();
         if (currentUser) {
@@ -424,7 +445,7 @@ function PerfilPage() {
                             className: "h-32 w-full rounded-t-lg bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-600 dark:to-purple-600"
                         }, void 0, false, {
                             fileName: "[project]/app/perfil/page.tsx",
-                            lineNumber: 59,
+                            lineNumber: 76,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -438,19 +459,19 @@ function PerfilPage() {
                                         className: "h-24 w-24 rounded-full border-4 border-white dark:border-black"
                                     }, void 0, false, {
                                         fileName: "[project]/app/perfil/page.tsx",
-                                        lineNumber: 65,
+                                        lineNumber: 82,
                                         columnNumber: 17
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "flex h-24 w-24 items-center justify-center rounded-full border-4 border-white bg-blue-500 text-3xl font-bold text-white dark:border-black",
-                                        children: currentUser.name.charAt(0).toUpperCase()
+                                        children: currentUser.name && currentUser.name.length > 0 ? currentUser.name.charAt(0).toUpperCase() : currentUser.username && currentUser.username.length > 0 ? currentUser.username.charAt(0).toUpperCase() : 'U'
                                     }, void 0, false, {
                                         fileName: "[project]/app/perfil/page.tsx",
-                                        lineNumber: 71,
+                                        lineNumber: 88,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/perfil/page.tsx",
-                                    lineNumber: 63,
+                                    lineNumber: 80,
                                     columnNumber: 13
                                 }, this),
                                 isEditing ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -464,7 +485,7 @@ function PerfilPage() {
                                                     children: "Nombre"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 80,
+                                                    lineNumber: 101,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -478,13 +499,13 @@ function PerfilPage() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 83,
+                                                    lineNumber: 104,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/perfil/page.tsx",
-                                            lineNumber: 79,
+                                            lineNumber: 100,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -494,7 +515,7 @@ function PerfilPage() {
                                                     children: "Username"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 92,
+                                                    lineNumber: 113,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -508,13 +529,13 @@ function PerfilPage() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 95,
+                                                    lineNumber: 116,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/perfil/page.tsx",
-                                            lineNumber: 91,
+                                            lineNumber: 112,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -524,7 +545,7 @@ function PerfilPage() {
                                                     children: "Email"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 104,
+                                                    lineNumber: 125,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -538,13 +559,13 @@ function PerfilPage() {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 107,
+                                                    lineNumber: 128,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/perfil/page.tsx",
-                                            lineNumber: 103,
+                                            lineNumber: 124,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -554,7 +575,7 @@ function PerfilPage() {
                                                     children: "Biografía"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 116,
+                                                    lineNumber: 137,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -568,13 +589,13 @@ function PerfilPage() {
                                                     placeholder: "Cuéntanos sobre ti..."
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 119,
+                                                    lineNumber: 140,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/perfil/page.tsx",
-                                            lineNumber: 115,
+                                            lineNumber: 136,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -586,7 +607,7 @@ function PerfilPage() {
                                                     children: "Guardar cambios"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 128,
+                                                    lineNumber: 149,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -596,19 +617,19 @@ function PerfilPage() {
                                                     children: "Cancelar"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 134,
+                                                    lineNumber: 155,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/perfil/page.tsx",
-                                            lineNumber: 127,
+                                            lineNumber: 148,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/perfil/page.tsx",
-                                    lineNumber: 78,
+                                    lineNumber: 99,
                                     columnNumber: 15
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
                                     children: [
@@ -620,7 +641,7 @@ function PerfilPage() {
                                                     children: currentUser.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 146,
+                                                    lineNumber: 167,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -631,7 +652,7 @@ function PerfilPage() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 149,
+                                                    lineNumber: 170,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -639,7 +660,7 @@ function PerfilPage() {
                                                     children: currentUser.bio || 'No hay biografía todavía.'
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 152,
+                                                    lineNumber: 173,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -647,13 +668,13 @@ function PerfilPage() {
                                                     children: currentUser.email
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/perfil/page.tsx",
-                                                    lineNumber: 155,
+                                                    lineNumber: 176,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/perfil/page.tsx",
-                                            lineNumber: 145,
+                                            lineNumber: 166,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -662,7 +683,7 @@ function PerfilPage() {
                                             children: "Editar perfil"
                                         }, void 0, false, {
                                             fileName: "[project]/app/perfil/page.tsx",
-                                            lineNumber: 159,
+                                            lineNumber: 180,
                                             columnNumber: 17
                                         }, this)
                                     ]
@@ -670,13 +691,13 @@ function PerfilPage() {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/perfil/page.tsx",
-                            lineNumber: 62,
+                            lineNumber: 79,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/perfil/page.tsx",
-                    lineNumber: 57,
+                    lineNumber: 74,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -690,22 +711,36 @@ function PerfilPage() {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/perfil/page.tsx",
-                            lineNumber: 172,
+                            lineNumber: 193,
                             columnNumber: 11
                         }, this),
-                        userPosts.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        isLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-black",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-gray-600 dark:text-gray-400",
+                                children: "Cargando publicaciones..."
+                            }, void 0, false, {
+                                fileName: "[project]/app/perfil/page.tsx",
+                                lineNumber: 198,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/app/perfil/page.tsx",
+                            lineNumber: 197,
+                            columnNumber: 13
+                        }, this) : userPosts.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-black",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 className: "text-gray-600 dark:text-gray-400",
                                 children: "Aún no has publicado nada. ¡Crea tu primera publicación!"
                             }, void 0, false, {
                                 fileName: "[project]/app/perfil/page.tsx",
-                                lineNumber: 177,
+                                lineNumber: 204,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/perfil/page.tsx",
-                            lineNumber: 176,
+                            lineNumber: 203,
                             columnNumber: 13
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "space-y-4",
@@ -713,29 +748,29 @@ function PerfilPage() {
                                     post: post
                                 }, post.id, false, {
                                     fileName: "[project]/app/perfil/page.tsx",
-                                    lineNumber: 184,
+                                    lineNumber: 211,
                                     columnNumber: 17
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/perfil/page.tsx",
-                            lineNumber: 182,
+                            lineNumber: 209,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/perfil/page.tsx",
-                    lineNumber: 171,
+                    lineNumber: 192,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/perfil/page.tsx",
-            lineNumber: 55,
+            lineNumber: 72,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/perfil/page.tsx",
-        lineNumber: 54,
+        lineNumber: 71,
         columnNumber: 5
     }, this);
 }

@@ -136,7 +136,7 @@ function CrearPublicacionPage() {
                                     columnNumber: 15
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 text-white font-semibold",
-                                    children: currentUser.name.charAt(0).toUpperCase()
+                                    children: currentUser.name && currentUser.name.length > 0 ? currentUser.name.charAt(0).toUpperCase() : currentUser.username && currentUser.username.length > 0 ? currentUser.username.charAt(0).toUpperCase() : 'U'
                                 }, void 0, false, {
                                     fileName: "[project]/app/crear-publicacion/page.tsx",
                                     lineNumber: 106,
@@ -146,27 +146,27 @@ function CrearPublicacionPage() {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "font-semibold text-gray-900 dark:text-white",
-                                            children: currentUser.name
+                                            children: currentUser.name || 'Usuario'
                                         }, void 0, false, {
                                             fileName: "[project]/app/crear-publicacion/page.tsx",
-                                            lineNumber: 111,
+                                            lineNumber: 115,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-sm text-gray-500 dark:text-gray-400",
                                             children: [
                                                 "@",
-                                                currentUser.username
+                                                currentUser.username || 'usuario'
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/crear-publicacion/page.tsx",
-                                            lineNumber: 114,
+                                            lineNumber: 118,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/crear-publicacion/page.tsx",
-                                    lineNumber: 110,
+                                    lineNumber: 114,
                                     columnNumber: 13
                                 }, this)
                             ]
@@ -184,7 +184,7 @@ function CrearPublicacionPage() {
                             disabled: isSubmitting
                         }, void 0, false, {
                             fileName: "[project]/app/crear-publicacion/page.tsx",
-                            lineNumber: 121,
+                            lineNumber: 125,
                             columnNumber: 11
                         }, this),
                         imageUrls.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -198,7 +198,7 @@ function CrearPublicacionPage() {
                                             className: "h-full w-full object-cover"
                                         }, void 0, false, {
                                             fileName: "[project]/app/crear-publicacion/page.tsx",
-                                            lineNumber: 135,
+                                            lineNumber: 139,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -211,23 +211,23 @@ function CrearPublicacionPage() {
                                                 children: "×"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/crear-publicacion/page.tsx",
-                                                lineNumber: 146,
+                                                lineNumber: 150,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/crear-publicacion/page.tsx",
-                                            lineNumber: 140,
+                                            lineNumber: 144,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, index, true, {
                                     fileName: "[project]/app/crear-publicacion/page.tsx",
-                                    lineNumber: 134,
+                                    lineNumber: 138,
                                     columnNumber: 17
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/crear-publicacion/page.tsx",
-                            lineNumber: 132,
+                            lineNumber: 136,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -245,7 +245,7 @@ function CrearPublicacionPage() {
                                             disabled: isSubmitting
                                         }, void 0, false, {
                                             fileName: "[project]/app/crear-publicacion/page.tsx",
-                                            lineNumber: 156,
+                                            lineNumber: 160,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -253,7 +253,7 @@ function CrearPublicacionPage() {
                                             children: "📷"
                                         }, void 0, false, {
                                             fileName: "[project]/app/crear-publicacion/page.tsx",
-                                            lineNumber: 164,
+                                            lineNumber: 168,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -264,13 +264,13 @@ function CrearPublicacionPage() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/crear-publicacion/page.tsx",
-                                            lineNumber: 165,
+                                            lineNumber: 169,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/crear-publicacion/page.tsx",
-                                    lineNumber: 155,
+                                    lineNumber: 159,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -280,13 +280,13 @@ function CrearPublicacionPage() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/crear-publicacion/page.tsx",
-                                    lineNumber: 167,
+                                    lineNumber: 171,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/crear-publicacion/page.tsx",
-                            lineNumber: 154,
+                            lineNumber: 158,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -300,7 +300,7 @@ function CrearPublicacionPage() {
                                     children: "Cancelar"
                                 }, void 0, false, {
                                     fileName: "[project]/app/crear-publicacion/page.tsx",
-                                    lineNumber: 172,
+                                    lineNumber: 176,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -310,13 +310,13 @@ function CrearPublicacionPage() {
                                     children: isSubmitting ? 'Publicando...' : 'Publicar'
                                 }, void 0, false, {
                                     fileName: "[project]/app/crear-publicacion/page.tsx",
-                                    lineNumber: 180,
+                                    lineNumber: 184,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/crear-publicacion/page.tsx",
-                            lineNumber: 171,
+                            lineNumber: 175,
                             columnNumber: 11
                         }, this)
                     ]

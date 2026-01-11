@@ -44,3 +44,47 @@ Explicame paso a paso como puedo crear en la carpeta backend un backend de micro
 PROMPT: 
 
 Quiero que implementes uno a uno cada uno de los pasos descritos en el documento bacend/README.md pero antes de avanzar al paso siguiente realiza una verificación del paso y espera mi confirmación. Durante todo este proceso no sobreescribas el archivo backend/README.md
+
+1. Configuración de Neon.tech
+2. Arquitectura de microservicios
+3. Configurar el Workspace
+4. Conexión a PostgreSQL 
+
+(Aqui le digo en un prompt de cursor que genere uan configuracion centralizada para los servicios)
+
+PROMPT:
+como puedo centralizar la configuracion de los servicios, incluida la variable DATABASE_URL usando un backend/shared ?
+
+5. Crear Auth Service
+6. Crear API Gateway
+7. crear los otros tres microservicios (Users, Posts y Comments)
+8. Inicializar la Base de Datos
+9. Ejecutar el Backend
+10. Ejecute pruebas de backend
+
+(creo el archivo backend/test-api.sh)
+
+
+PROMPT:
+
+ahora explicame como puedo probar el frontend con el backend
+
+(Hago un commit a git)
+
+PROMPT:
+
+Corrige la pagina de Perfil por que no se ven las publicaciones del usuario que inicio sesion 
+
+PROMPT:
+Por que en el frontend  al recargar la pagina desde el browser se cambia el usuario que hizo login a un usuario por defecto @Usuario ?
+
+PROMPT:
+
+Agregar en la pagina de Perfil las funcionalidades para editar y eliminar publicaciones. Modifica el frontend y el backend si es necesario para estas nuevas funcionalidades
+
+
+PROMPT:
+
+Explicame la estructura del proyecto, sus componentes y aquitectura. Explicame si existe un frontend y un backend definido para este proyecto, en que tecnologias estan construidos y como interactuan entre ellos.
+
+(Creo el archivo ARCHITECTURE.md)

@@ -1,5 +1,5 @@
 import { getApiUrl } from './config';
-import type { User, Post, Comment } from '@/types';
+import type { User, Post, Comment, Like } from '@/types';
 
 // Tipos para las respuestas de la API
 interface ApiResponse<T> {
@@ -134,6 +134,11 @@ export const postsApi = {
     return apiRequest<PostsResponse>(`/api/posts?page=${page}&limit=${limit}`);
   },
 
+  // Obtener posts de un usuario específico
+  async getByUser(userId: string, page = 1, limit = 50): Promise<PostsResponse> {
+    return apiRequest<PostsResponse>(`/api/posts/user/${userId}?page=${page}&limit=${limit}`);
+  },
+
   // Crear publicación
   async create(data: { content: string; images?: string[] }): Promise<Post> {
     const response = await apiRequest<PostResponse>('/api/posts', {
@@ -146,6 +151,15 @@ export const postsApi = {
   // Obtener publicación por ID
   async getById(postId: string): Promise<Post> {
     const response = await apiRequest<PostResponse>(`/api/posts/${postId}`);
+    return response.post;
+  },
+
+  // Actualizar publicación
+  async update(postId: string, data: { content?: string; images?: string[] }): Promise<Post> {
+    const response = await apiRequest<PostResponse>(`/api/posts/${postId}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
     return response.post;
   },
 
@@ -177,9 +191,20 @@ export const commentsApi = {
   },
 
   // Dar like a un post
-  async toggleLike(postId: string): Promise<{ liked: boolean; likes: number }> {
+  async toggleLike(postId: string): Promise<{ liked: boolean; likesCount: number; message?: string }> {
     return apiRequest(`/api/comments/post/${postId}/like`, {
       method: 'POST',
     });
+  },
+
+  // Obtener likes de un post
+  async getLikesByPost(postId: string): Promise<Like[]> {
+    const response = await apiRequest<{ likes: any[] }>(`/api/comments/post/${postId}/likes`);
+    return (response.likes || []).map((like: any) => ({
+      id: String(like.id),
+      postId: String(like.post_id || like.postId),
+      userId: String(like.user_id || like.userId),
+      createdAt: new Date(like.created_at || like.createdAt),
+    }));
   },
 };
